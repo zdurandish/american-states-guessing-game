@@ -12,17 +12,14 @@ turtle = Turtle()
 turtle.shape(image)
 
 guessed_states = []
-states_to_learn = []
 
 while len(guessed_states) < 50:
     user_guess = screen.textinput(title=f"{len(guessed_states)}/50 Correct Answers!", prompt= "Guess a State!").title()
 
     if user_guess == "Exit":
-        for state in states:
-            if state not in guessed_states:
-                states_to_learn.append(state)
-                new_file = pandas.Series(states_to_learn)
-                new_file.to_csv("states_to_learn.csv")
+        states_to_learn = [state for state in states if state not in guessed_states]
+        new_file = pandas.Series(states_to_learn)
+        new_file.to_csv("states_to_learn.csv")
         break
     if user_guess in states:
         guessed_states.append(user_guess)
