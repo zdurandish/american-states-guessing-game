@@ -15,7 +15,7 @@ guessed_states = []
 states_to_learn = []
 
 while len(guessed_states) < 50:
-    user_guess = screen.textinput(title=f"{len(guessed_states)}/50 Correct Answers!")
+    user_guess = screen.textinput(title=f"{len(guessed_states)}/50 Correct Answers!", prompt= "Guess a State!").title()
 
     if user_guess == "Exit":
         for state in states:
@@ -24,5 +24,12 @@ while len(guessed_states) < 50:
                 new_file = pandas.Series(states_to_learn)
                 new_file.to_csv("states_to_learn.csv")
         break
-    
-screen.exitonclick()
+    if user_guess in states:
+        guessed_states.append(user_guess)
+        xcor = data[data.state == user_guess].x.item()
+        ycor = data[data.state == user_guess].y.item()
+        turt = Turtle()
+        turt.hideturtle()
+        turt.penup()
+        turt.goto(xcor, ycor)
+        turt.write(user_guess)
